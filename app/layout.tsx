@@ -35,15 +35,8 @@ export default function RootLayout({
           <Script src="https://unpkg.com/react-scan/dist/auto.global.js"></Script>
         )}
       </head>
-      <body
-        className={cn(geistSans.variable, geistMono.variable, "antialiased")}
-      >
-        <Providers
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+      <body className={cn(geistSans.variable, geistMono.variable, "antialiased")}>
+        <Providers attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Suspense fallback={<div>Loading...</div>}>
             <MailComposeModal />
             <CommandPaletteProvider>{children}</CommandPaletteProvider>
