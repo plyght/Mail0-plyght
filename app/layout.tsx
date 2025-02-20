@@ -1,4 +1,3 @@
-// app/layout.tsx
 import { CommandPaletteProvider } from "@/components/ui/command-palette";
 import MailComposeModal from "@/components/mail/mail-compose-modal";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -39,13 +38,11 @@ export default function RootLayout({
       <body className={cn(geistSans.variable, geistMono.variable, "antialiased")}>
         <Providers attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <Suspense fallback={<div>Loading...</div>}>
-            {" "}
-            {/* Corrected Spacing */}
             <MailComposeModal />
             <CommandPaletteProvider>{children}</CommandPaletteProvider>
-            <Toast />
-            <Analytics />
           </Suspense>
+          <Toast />
+          <Analytics />
         </Providers>
       </body>
     </html>
