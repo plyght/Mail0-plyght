@@ -7,7 +7,7 @@ import { useOpenComposeModal } from "@/hooks/use-open-compose-modal";
 import { navigationConfig } from "@/config/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { useSidebar } from "@/components/ui/sidebar";
-import { useIsMobile } from "@/hooks/use-mobile"; // Import useIsMobile
+import { useIsMobile } from "@/hooks/use-mobile";
 import React, { useMemo, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { $fetch } from "@/lib/auth-client";
@@ -27,6 +27,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
 
   const { currentSection, navItems } = useMemo(() => {
+    // Find which section we're in based on the pathname
     const section = Object.entries(navigationConfig).find(([, config]) =>
       pathname.startsWith(config.path),
     );
@@ -47,13 +48,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }, [pathname, stats]);
 
   const showComposeButton = currentSection === "mail";
-  const { isMobile } = useSidebar();
+
   return (
-    <Sidebar
-      collapsible="icon"
-      {...props}
-      className={`flex flex-col items-center pl-1 ${isMobile ? "hidden" : "flex"}`}
-    >
+    <Sidebar collapsible="icon" {...props} className="flex flex-col items-center pl-1">
       <div className="flex w-full flex-col">
         <SidebarHeader className="flex flex-col gap-2 p-2">
           <div className="mt-3">

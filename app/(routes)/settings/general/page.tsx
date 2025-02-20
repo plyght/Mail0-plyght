@@ -17,11 +17,11 @@ import {
 } from "@/components/ui/select";
 import { SettingsCard } from "@/components/settings/settings-card";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSidebar } from "@/components/ui/sidebar";
 import { Globe, Clock, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { signOut } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -35,8 +35,8 @@ const formSchema = z.object({
 });
 
 export default function GeneralPage() {
+  const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
-  const { setOpen } = useSidebar();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,6 +50,10 @@ export default function GeneralPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSaving(true);
+
+    // TODO: Save settings in user's account
+
+    // Simulate API call
     setTimeout(() => {
       console.log(values);
       setIsSaving(false);
@@ -59,7 +63,11 @@ export default function GeneralPage() {
   const handleSignOut = async () => {
     await toast.promise(
       signOut({
-        // Removed fetchOptions
+        fetchOptions: {
+          onSuccess: () => {
+            router.push("/");
+          },
+        },
       }),
       {
         loading: "Signing out...",
@@ -76,8 +84,9 @@ export default function GeneralPage() {
         description="Manage settings for your language and email display preferences."
         footer={
           <div className="flex justify-between">
-            <Button variant="outline" onClick={() => form.reset()}>
-              Reset to Defaults
+            <Button variant="destructive" onClick={handleSignOut}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Log out
             </Button>
             <Button type="submit" form="general-form" disabled={isSaving}>
               {isSaving ? "Saving..." : "Save changes"}
@@ -170,28 +179,8 @@ export default function GeneralPage() {
                 </FormItem>
               )}
             />
-            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <FormLabel className="text-base">Collapse sidebar</FormLabel>
-                <FormDescription>Condense the sidebar to only show icons.</FormDescription>
-              </div>
-              <FormControl>
-                <Switch
-                  checked={useSidebar().state === "collapsed"}
-                  onCheckedChange={(open) => setOpen(!open)}
-                />
-              </FormControl>
-            </FormItem>
           </form>
         </Form>
-      </SettingsCard>
-      <SettingsCard title="Account" description="Manage your account settings and preferences.">
-        <div className="flex justify-between">
-          <Button onClick={handleSignOut} variant="destructive">
-            Sign Out
-            <LogOut className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
       </SettingsCard>
     </div>
   );

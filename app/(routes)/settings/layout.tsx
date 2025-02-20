@@ -17,7 +17,9 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
 
 function SettingsLayoutContent({ children }: { children: React.ReactNode }) {
   const [isMobile, setIsMobile] = useState(false);
+  // const isDesktop = useMediaQuery("(min-width: 768px)");
 
+  // Check if we're on mobile on mount and when window resizes
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
