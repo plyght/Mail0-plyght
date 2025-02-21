@@ -37,7 +37,7 @@ export default function RootLayout({
       </head>
       <body className={cn(geistSans.variable, geistMono.variable, "antialiased")}>
         <Providers attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense>
             <MailComposeModal />
             <CommandPaletteProvider>{children}</CommandPaletteProvider>
           </Suspense>
