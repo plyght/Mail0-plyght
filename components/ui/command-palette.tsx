@@ -14,8 +14,13 @@ import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useOpenComposeModal } from "@/hooks/use-open-compose-modal";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { navigationConfig, NavItem } from "@/config/navigation"; // Import NavItem
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
+import { CircleHelp } from "lucide-react";
+import { Pencil } from "lucide-react";
 import * as React from "react";
+
+import { keyboardShortcuts } from "@/config/shortcuts"; // CORRECT import
 
 type CommandPaletteContext = {
   open: boolean;
@@ -34,25 +39,20 @@ export function useCommandPalette() {
 
 export function CommandPaletteProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
-  const { setOpen: setComposeOpen } = useOpenComposeModal();
+  const { open: openComposeModal } = useOpenComposeModal(); // Correctly use open function
   const router = useRouter();
-
+  const pathname = usePathname();
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setOpen((prevOpen) => !prevOpen);
       }
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "c") {
-        e.preventDefault();
-        setComposeOpen(true);
-        setOpen(false);
-      }
     };
 
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
-  }, [setComposeOpen]);
+  }, []);
 
   const runCommand = React.useCallback((command: () => unknown) => {
     setOpen(false);
@@ -67,24 +67,44 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
     for (const sectionKey in navigationConfig) {
       const section = navigationConfig[sectionKey];
       section.sections.forEach((group) => {
-        const filteredItems = group.items.filter((item) => item.title !== "Back to Mail");
-        filteredItems.forEach((item) => {
-          if (sectionKey === "mail") {
-            mailCommands.push({ group: sectionKey, item });
+        group.items.forEach((item) => {
+          // Check if it's the "Back to Mail" item and if we are NOT in settings
+          if (!(sectionKey === "settings" && item.isBackButton)) {
+            if (sectionKey === "mail") {
+              mailCommands.push({ group: sectionKey, item });
+            } else if (sectionKey === "settings") {
+              settingsCommands.push({ group: sectionKey, item });
+            } else {
+              otherCommands.push({ group: sectionKey, item });
+            }
           } else if (sectionKey === "settings") {
-            settingsCommands.push({ group: sectionKey, item });
-          } else {
-            otherCommands.push({ group: sectionKey, item });
+            settingsCommands.push({ group: sectionKey, item }); //show 'back to mail' button
           }
         });
       });
     }
-    return [
+
+    const combinedCommands = [
       { group: "Mail", items: mailCommands.map((c) => c.item) },
       { group: "Settings", items: settingsCommands.map((c) => c.item) },
       ...otherCommands.map((section) => ({ group: section.group, items: section.item })),
     ];
-  }, []);
+
+    // Filter "Back to Mail" based on the current pathname
+    const filteredCommands = combinedCommands.map((group) => {
+      if (group.group === "Settings") {
+        return {
+          ...group,
+          items: group.items.filter((item) => {
+            return pathname.startsWith("/settings") || !item.isBackButton;
+          }),
+        };
+      }
+      return group;
+    });
+
+    return filteredCommands;
+  }, [pathname]); // Depend on pathname
 
   return (
     <CommandPaletteContext.Provider
@@ -92,8 +112,9 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         open,
         setOpen,
         openModal: () => {
-          setComposeOpen(true);
+          // Use openModal from context
           setOpen(false);
+          openComposeModal();
         },
       }}
     >
@@ -105,38 +126,69 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         <CommandInput autoFocus placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
+          <CommandGroup>
+            <CommandItem onSelect={() => runCommand(() => openComposeModal())}>
+              <Pencil size={16} strokeWidth={2} className="opacity-60" aria-hidden="true" />
+              <span>Compose message</span>
+              <CommandShortcut>
+                {keyboardShortcuts
+                  .find((s: { action: string; keys: string[] }) => s.action === "New Email")
+                  ?.keys.join(" ")}
+              </CommandShortcut>
+            </CommandItem>
+          </CommandGroup>
           {allCommands.map((group, groupIndex) => (
             <React.Fragment key={groupIndex}>
-              <CommandGroup heading={group.group}>
-                {group.items.map((item) => (
-                  <CommandItem
-                    key={item.url}
-                    onSelect={() =>
-                      runCommand(() => {
-                        if (item.title === "Compose") {
-                          openModal();
-                        } else {
+              {group.items.length > 0 && (
+                <CommandGroup heading={group.group}>
+                  {group.items.map((item) => (
+                    <CommandItem
+                      key={item.url}
+                      onSelect={() =>
+                        runCommand(() => {
                           router.push(item.url);
-                        }
-                      })
-                    }
-                  >
-                    {item.icon && (
-                      <item.icon
-                        size={16}
-                        strokeWidth={2}
-                        className="opacity-60"
-                        aria-hidden="true"
-                      />
-                    )}
-                    <span>{item.title}</span>
-                    {item.shortcut && <CommandShortcut>{item.shortcut}</CommandShortcut>}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
+                        })
+                      }
+                    >
+                      {item.icon && (
+                        <item.icon
+                          size={16}
+                          strokeWidth={2}
+                          className="opacity-60"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <span>{item.title}</span>
+                      {item.shortcut && <CommandShortcut>{item.shortcut}</CommandShortcut>}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
               {groupIndex < allCommands.length - 1 && <CommandSeparator />}
             </React.Fragment>
           ))}
+          <CommandSeparator />
+          <CommandGroup heading="Help">
+            <CommandItem onSelect={() => runCommand(() => console.log("Help with shortcuts"))}>
+              <CircleHelp size={16} strokeWidth={2} className="opacity-60" aria-hidden="true" />
+              <span>Help with shortcuts</span>
+              <CommandShortcut>
+                {keyboardShortcuts
+                  .find(
+                    (s: { action: string; keys: string[] }) => s.action === "Help with shortcuts",
+                  )
+                  ?.keys.join(" ")}
+              </CommandShortcut>
+            </CommandItem>
+            <CommandItem
+              onSelect={() =>
+                runCommand(() => window.open("https://github.com/nizzyabi/mail0", "_blank"))
+              }
+            >
+              <ArrowUpRight size={16} strokeWidth={2} className="opacity-60" aria-hidden="true" />
+              <span>Go to docs</span>
+            </CommandItem>
+          </CommandGroup>
         </CommandList>
       </CommandDialog>
       {children}
