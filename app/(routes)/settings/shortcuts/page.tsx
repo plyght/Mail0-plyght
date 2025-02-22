@@ -1,4 +1,3 @@
-// File: components/settings/shortcuts/page.tsx
 "use client";
 
 import { DEFAULT_KEYBOARD_SHORTCUTS, HAS_SHORTCUTS_CHANGED } from "@/config/shortcuts";
