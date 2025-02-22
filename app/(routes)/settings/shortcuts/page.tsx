@@ -29,7 +29,6 @@ export default function ShortcutsPage() {
   const [shortcuts, setShortcuts] = useAtom(keyboardShortcutsAtom);
   const [isEditing, setIsEditing] = useState<string | null>(null);
   const [tempShortcut, setTempShortcut] = useState<string[]>([]); // Temporarily store new keys
-  const shortcutContainerRef = useRef<HTMLDivElement>(null); // Ref for click-outside
 
   useEffect(() => {
     const hasChanged = localStorage.getItem(HAS_SHORTCUTS_CHANGED);
@@ -198,23 +197,24 @@ export default function ShortcutsPage() {
   );
 }
 
+interface ShortcutProps {
+  children: ReactNode;
+  keys: string[];
+  isEditing: boolean;
+  onEdit: () => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+  setIsEditing: React.Dispatch<React.SetStateAction<string | null>>;
+  setTempShortcut: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
 function Shortcut({
   children,
   keys,
   isEditing,
   onEdit,
-  tempShortcut,
   setIsEditing,
   setTempShortcut,
-}: {
-  children: ReactNode;
-  keys: string[];
-  isEditing: boolean;
-  onEdit: () => void;
-  tempShortcut: string[];
-  setIsEditing: React.Dispatch<React.SetStateAction<string | null>>;
-  setTempShortcut: React.Dispatch<React.SetStateAction<string[]>>;
-}) {
+}: ShortcutProps) {
   const shortcutContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

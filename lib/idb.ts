@@ -3,7 +3,7 @@ import Dexie from "dexie";
 
 interface CacheEntry {
   key: string;
-  state: State<any>;
+  state: State<unknown>;
   timestamp: number;
 }
 
@@ -21,8 +21,8 @@ class SWRDatabase extends Dexie {
 const db = new SWRDatabase();
 const ONE_DAY = 1000 * 60 * 60 * 24;
 
-export function dexieStorageProvider(_: Readonly<Cache>): Cache {
-  const memoryCache = new Map<string, State<any>>();
+export function dexieStorageProvider(): Cache {
+  const memoryCache = new Map<string, State<unknown>>();
 
   db.cache
     .each((entry) => {
