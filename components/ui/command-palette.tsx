@@ -1,3 +1,4 @@
+// File: components/ui/command-palette.tsx
 "use client";
 
 import {
@@ -13,14 +14,14 @@ import {
 import { DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useOpenComposeModal } from "@/hooks/use-open-compose-modal";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { navigationConfig, NavItem } from "@/config/navigation"; // Import NavItem
+import { navigationConfig, NavItem } from "@/config/navigation";
+import { keyboardShortcutsAtom } from "@/store/shortcuts";
 import { useRouter, usePathname } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { CircleHelp } from "lucide-react";
 import { Pencil } from "lucide-react";
+import { useAtom } from "jotai";
 import * as React from "react";
-
-import { keyboardShortcuts } from "@/config/shortcuts"; // CORRECT import
 
 type CommandPaletteContext = {
   open: boolean;
@@ -39,9 +40,10 @@ export function useCommandPalette() {
 
 export function CommandPaletteProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
-  const { open: openComposeModal } = useOpenComposeModal(); // Correctly use open function
+  const { open: openComposeModal } = useOpenComposeModal();
   const router = useRouter();
   const pathname = usePathname();
+  const [keyboardShortcuts] = useAtom(keyboardShortcutsAtom);
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
@@ -106,6 +108,18 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
     return filteredCommands;
   }, [pathname]); // Depend on pathname
 
+  const getShortcut = (action: string) => {
+    const shortcut = keyboardShortcuts.find((s) => s.action === action);
+    if (!shortcut) return;
+    return shortcut.keys
+      .map((key) => {
+        if (key === "Meta") return "⌘";
+        if (key === "Control") return "Ctrl";
+        return key;
+      })
+      .join("+");
+  };
+
   return (
     <CommandPaletteContext.Provider
       value={{
@@ -127,14 +141,13 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           <CommandGroup>
-            <CommandItem onSelect={() => runCommand(() => openComposeModal())}>
+            <CommandItem
+              onSelect={() => runCommand(() => openComposeModal())}
+              aria-label="Compose New Email"
+            >
               <Pencil size={16} strokeWidth={2} className="opacity-60" aria-hidden="true" />
               <span>Compose message</span>
-              <CommandShortcut>
-                {keyboardShortcuts
-                  .find((s: { action: string; keys: string[] }) => s.action === "New Email")
-                  ?.keys.join(" ")}
-              </CommandShortcut>
+              <CommandShortcut>{getShortcut("New Email")}</CommandShortcut>
             </CommandItem>
           </CommandGroup>
           {allCommands.map((group, groupIndex) => (
@@ -149,6 +162,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
                           router.push(item.url);
                         })
                       }
+                      aria-label={item.title}
                     >
                       {item.icon && (
                         <item.icon
@@ -172,13 +186,7 @@ export function CommandPaletteProvider({ children }: { children: React.ReactNode
             <CommandItem onSelect={() => runCommand(() => console.log("Help with shortcuts"))}>
               <CircleHelp size={16} strokeWidth={2} className="opacity-60" aria-hidden="true" />
               <span>Help with shortcuts</span>
-              <CommandShortcut>
-                {keyboardShortcuts
-                  .find(
-                    (s: { action: string; keys: string[] }) => s.action === "Help with shortcuts",
-                  )
-                  ?.keys.join(" ")}
-              </CommandShortcut>
+              <CommandShortcut>{getShortcut("Help with shortcuts")}</CommandShortcut>
             </CommandItem>
             <CommandItem
               onSelect={() =>
