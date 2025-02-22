@@ -8,6 +8,7 @@ import { useRef, useState } from "react";
 import { ParsedMessage } from "@/types";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[] }) {
   const editorRef = useRef<HTMLTextAreaElement>(null);
@@ -30,6 +31,84 @@ export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[]
 
   const removeAttachment = (index: number) => {
     setAttachments(attachments.filter((_, i) => i !== index));
+  };
+
+  const constructReplyBody = (
+    formattedMessage: string,
+    originalDate: string,
+    originalSender: { name?: string; email?: string } | undefined,
+    cleanedToEmail: string,
+    quotedMessage?: string,
+  ) => {
+    return `
+      <div style="font-family: Arial, sans-serif;">
+        <div style="margin-bottom: 20px;">
+          ${formattedMessage}
+        </div>
+        <div style="padding-left: 1em; margin-top: 1em; border-left: 2px solid #ccc; color: #666;">
+          <div style="margin-bottom: 1em;">
+            On ${originalDate}, ${originalSender?.name ? `${originalSender.name} ` : ""}${originalSender?.email ? `&lt;${cleanedToEmail}&gt;` : ""} wrote:
+          </div>
+          <div style="white-space: pre-wrap;">
+            ${quotedMessage}
+          </div>
+        </div>
+      </div>
+    `;
+  };
+
+  const handleSendEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      const originalSubject = emailData[0]?.subject || "";
+      const subject = originalSubject.startsWith("Re:")
+        ? originalSubject
+        : `Re: ${originalSubject}`;
+
+      const originalSender = emailData[0]?.sender;
+      const cleanedToEmail = cleanEmailAddress(emailData[emailData.length - 1]?.sender?.email);
+      const originalDate = new Date(emailData[0]?.receivedOn || "").toLocaleString();
+      const quotedMessage = emailData[0]?.decodedBody;
+      const messageId = emailData[0]?.messageId;
+      const threadId = emailData[0]?.threadId;
+
+      const formattedMessage = messageContent
+        .split("\n")
+        .map((line) => `<div>${line || "<br/>"}</div>`)
+        .join("");
+
+      const replyBody = constructReplyBody(
+        formattedMessage,
+        originalDate,
+        originalSender,
+        cleanedToEmail,
+        quotedMessage,
+      );
+
+      const inReplyTo = messageId;
+
+      const existingRefs = emailData[0]?.references?.split(" ") || [];
+      const references = [...existingRefs, emailData[0]?.inReplyTo, cleanEmailAddress(messageId)]
+        .filter(Boolean)
+        .join(" ");
+
+      await sendEmail({
+        to: cleanedToEmail,
+        subject,
+        message: replyBody,
+        attachments,
+        headers: {
+          "In-Reply-To": inReplyTo ?? "",
+          References: references,
+          "Thread-Id": threadId ?? "",
+        },
+      });
+
+      toast.success("Email sent successfully!");
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send email. Please try again.");
+    }
   };
 
   return (
@@ -153,75 +232,7 @@ export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[]
             <Button variant="ghost" size="sm" className="h-8">
               Save draft
             </Button>
-            <Button
-              size="sm"
-              className="h-8"
-              onClick={async (e) => {
-                e.preventDefault();
-                try {
-                  const originalSubject = emailData[0]?.subject || "";
-                  const subject = originalSubject.startsWith("Re:")
-                    ? originalSubject
-                    : `Re: ${originalSubject}`;
-
-                  const originalSender = emailData[0]?.sender;
-                  const cleanedToEmail = cleanEmailAddress(
-                    emailData[emailData.length - 1]?.sender?.email,
-                  );
-                  const originalDate = new Date(emailData[0]?.receivedOn || "").toLocaleString();
-                  const quotedMessage = emailData[0]?.decodedBody;
-                  const messageId = emailData[0]?.messageId;
-                  const threadId = emailData[0]?.threadId;
-
-                  const formattedMessage = messageContent
-                    .split("\n")
-                    .map((line) => `<div>${line || "<br/>"}</div>`)
-                    .join("");
-
-                  const replyBody = `
-                    <div style="font-family: Arial, sans-serif;">
-                      <div style="margin-bottom: 20px;">
-                        ${formattedMessage}
-                      </div>
-                      <div style="padding-left: 1em; margin-top: 1em; border-left: 2px solid #ccc; color: #666;">
-                        <div style="margin-bottom: 1em;">
-                          On ${originalDate}, ${originalSender?.name ? `${originalSender.name} ` : ""}${originalSender?.email ? `&lt;${cleanedToEmail}&gt;` : ""} wrote:
-                        </div>
-                        <div style="white-space: pre-wrap;">
-                          ${quotedMessage}
-                        </div>
-                      </div>
-                    </div>
-                  `;
-
-                  const inReplyTo = messageId;
-
-                  const existingRefs = emailData[0]?.references?.split(" ") || [];
-                  const references = [
-                    ...existingRefs,
-                    emailData[0]?.inReplyTo,
-                    cleanEmailAddress(messageId),
-                  ]
-                    .filter(Boolean)
-                    .join(" ");
-
-                  await sendEmail({
-                    to: cleanedToEmail,
-                    subject,
-                    message: replyBody,
-                    attachments,
-                    headers: {
-                      "In-Reply-To": inReplyTo ?? "",
-                      References: references,
-                      "Thread-Id": threadId ?? "",
-                    },
-                  });
-                } catch (error) {
-                  console.error("Error sending email:", error);
-                  // TODO: SHOW TOAST
-                }
-              }}
-            >
+            <Button size="sm" className="h-8" onClick={handleSendEmail}>
               Send <Send className="ml-2 h-3 w-3" />
             </Button>
           </div>

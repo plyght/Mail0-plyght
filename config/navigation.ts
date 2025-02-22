@@ -18,6 +18,7 @@ interface NavItem {
   badge?: number;
   isBackButton?: boolean;
   isSettingsButton?: boolean;
+  disabled?: boolean;
 }
 
 interface NavSection {
@@ -41,7 +42,6 @@ export const navigationConfig: Record<string, NavConfig> = {
             title: "Inbox",
             url: "/mail/inbox",
             icon: InboxIcon,
-            badge: 0,
           },
           {
             title: "Drafts",
@@ -57,36 +57,36 @@ export const navigationConfig: Record<string, NavConfig> = {
             title: "Spam",
             url: "/mail/spam",
             icon: XIcon,
-            badge: 0,
           },
           {
             title: "Archive",
             url: "/mail/archive",
             icon: ArchiveIcon,
+            disabled: true,
           },
           {
             title: "Social",
             url: "/mail/inbox?category=social",
             icon: UsersIcon,
-            badge: 972,
+            disabled: true,
           },
           {
             title: "Updates",
             url: "/mail/inbox?category=updates",
             icon: BellIcon,
-            badge: 342,
+            disabled: true,
           },
           {
             title: "Forums",
             url: "/mail/inbox?category=forums",
             icon: MessageCircleIcon,
-            badge: 128,
+            disabled: true,
           },
           {
             title: "Shopping",
             url: "/mail/inbox?category=shopping",
             icon: CartIcon,
-            badge: 8,
+            disabled: true,
           },
           {
             title: "Settings",

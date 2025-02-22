@@ -151,14 +151,16 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
             {message.unread ? <span className="ml-0.5 size-2 rounded-full bg-[#006FFE]" /> : null}
           </p>
         </div>
-        <p
-          className={cn(
-            "text-xs font-normal opacity-70 transition-opacity group-hover:opacity-100",
-            isMailSelected && "opacity-100",
-          )}
-        >
-          {formatDate(message.receivedOn)}
-        </p>
+        {message.receivedOn ? (
+          <p
+            className={cn(
+              "text-xs font-normal opacity-70 transition-opacity group-hover:opacity-100",
+              isMailSelected && "opacity-100",
+            )}
+          >
+            {formatDate(message.receivedOn.split(".")[0])}
+          </p>
+        ) : null}
       </div>
       <p
         className={cn(
