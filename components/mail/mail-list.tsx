@@ -151,14 +151,16 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
             {message.unread ? <span className="ml-0.5 size-2 rounded-full bg-[#006FFE]" /> : null}
           </p>
         </div>
-        <p
-          className={cn(
-            "text-xs font-normal opacity-70 transition-opacity group-hover:opacity-100",
-            isMailSelected && "opacity-100",
-          )}
-        >
-          {formatDate(message.receivedOn)}
-        </p>
+        {message.receivedOn ? (
+          <p
+            className={cn(
+              "text-xs font-normal opacity-70 transition-opacity group-hover:opacity-100",
+              isMailSelected && "opacity-100",
+            )}
+          >
+            {formatDate(message.receivedOn.split(".")[0])}
+          </p>
+        ) : null}
       </div>
       <p
         className={cn(
@@ -177,6 +179,7 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
 export function MailList({ items, isCompact, folder }: MailListProps) {
   const [mail, setMail] = useMail();
   const { data: session } = useSession();
+  const [searchValue, setSearchValue] = useSearchValue();
 
   const massSelectMode = useKeyPressed(["Control", "Meta"]);
   const rangeSelectMode = useKeyPressed("Shift");
@@ -228,8 +231,12 @@ export function MailList({ items, isCompact, folder }: MailListProps) {
   };
 
   const isEmpty = items.length === 0;
+  const isFiltering = searchValue.value.trim().length > 0;
 
   if (isEmpty && session) {
+    if (isFiltering) {
+      return <EmptyState folder="search" className="min-h-[90vh] md:min-h-[90vh]" />;
+    }
     return <EmptyState folder={folder as FolderType} className="min-h-[90vh] md:min-h-[90vh]" />;
   }
 

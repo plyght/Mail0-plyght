@@ -9,20 +9,16 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import React, { useMemo, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { $fetch } from "@/lib/auth-client";
-import { BASE_URL } from "@/lib/constants";
+import { mailCount } from "@/actions/mail";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import { Button } from "./button";
 import Image from "next/image";
 import useSWR from "swr";
 
-const fetchStats = async () => {
-  return await $fetch("/api/v1/mail/count?", { baseURL: BASE_URL }).then((e) => e.data as number[]);
-};
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: stats } = useSWR<number[]>("/api/v1/mail/count", fetchStats);
+  const { data: stats } = useSWR<number[]>("mail-count", mailCount);
+
   const pathname = usePathname();
 
   const { currentSection, navItems } = useMemo(() => {
