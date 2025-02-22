@@ -6,7 +6,17 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Archive, ArchiveX, FileText, Inbox, LucideIcon, Plus, Send, Trash2 } from "lucide-react";
+import {
+  Archive,
+  ArchiveX,
+  FileText,
+  Inbox,
+  LucideIcon,
+  Plus,
+  SearchX,
+  Send,
+  Trash2,
+} from "lucide-react";
 import { emailProviders } from "@/constants/emailProviders";
 import { useConnections } from "@/hooks/use-connections";
 import { Button } from "@/components/ui/button";
@@ -14,7 +24,7 @@ import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 
 // Types for default inbox filters
-export type FolderType = "inbox" | "draft" | "sent" | "spam" | "trash" | "archive";
+export type FolderType = "inbox" | "draft" | "sent" | "spam" | "trash" | "archive" | "search";
 
 interface EmptyStateConfig {
   icon: LucideIcon;
@@ -64,6 +74,11 @@ const FOLDER_CONFIGS: FolderConfig = {
     icon: Archive,
     title: "No archived messages",
     description: "Messages you archive will appear here",
+  },
+  search: {
+    icon: SearchX,
+    title: "No results found",
+    description: "Try adjusting your search or filters to find what you're looking for",
   },
 } as const;
 

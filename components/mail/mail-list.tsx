@@ -179,6 +179,7 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
 export function MailList({ items, isCompact, folder }: MailListProps) {
   const [mail, setMail] = useMail();
   const { data: session } = useSession();
+  const [searchValue, setSearchValue] = useSearchValue();
 
   const massSelectMode = useKeyPressed(["Control", "Meta"]);
   const rangeSelectMode = useKeyPressed("Shift");
@@ -230,8 +231,12 @@ export function MailList({ items, isCompact, folder }: MailListProps) {
   };
 
   const isEmpty = items.length === 0;
+  const isFiltering = searchValue.value.trim().length > 0;
 
   if (isEmpty && session) {
+    if (isFiltering) {
+      return <EmptyState folder="search" className="min-h-[90vh] md:min-h-[90vh]" />;
+    }
     return <EmptyState folder={folder as FolderType} className="min-h-[90vh] md:min-h-[90vh]" />;
   }
 
