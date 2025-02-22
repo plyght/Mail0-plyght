@@ -34,6 +34,7 @@ interface NavItemProps {
   isBackButton?: boolean;
   isSettingsButton?: boolean;
   isSettingsPage?: boolean;
+  disabled?: boolean;
 }
 
 interface NavMainProps {
@@ -180,6 +181,19 @@ export function NavMain({ items }: NavMainProps) {
 
 function NavItem(item: NavItemProps & { href: string }) {
   const iconRef = useRef<IconRefType>(null);
+
+  if (item.disabled) {
+    return (
+      <SidebarMenuButton
+        tooltip={item.title}
+        className="flex cursor-not-allowed items-center opacity-50"
+      >
+        {item.icon && <item.icon ref={iconRef} className="relative mr-3 h-3 w-3.5" />}
+        <p className="mt-0.5 text-[13px]">{item.title}</p>
+      </SidebarMenuButton>
+    );
+  }
+
   return (
     <Collapsible defaultOpen={item.isActive}>
       <CollapsibleTrigger asChild>

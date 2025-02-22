@@ -65,15 +65,8 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
 
     if (!isMailSelected && message.unread) {
       try {
-        const response = await fetch(`/api/v1/mail/${message.id}/read`, {
-          method: "POST",
-        });
-        if (response.ok) {
-          setMessage((prev) => ({ ...prev, unread: false }));
-          await markAsRead(message.id);
-        } else {
-          console.error("Failed to mark message as read");
-        }
+        await markAsRead(message.id);
+        setMessage((prev) => ({ ...prev, unread: false }));
       } catch (error) {
         console.error("Error marking message as read:", error);
       }
@@ -93,9 +86,10 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
       // Set new timeout for prefetch
       hoverTimeoutRef.current = setTimeout(() => {
         if (isHovering.current) {
+          const messageId = message.threadId ?? message.id;
           // Only prefetch if still hovering and hasn't been prefetched
-          console.log(`🕒 Hover threshold reached for email ${message.id}, initiating prefetch...`);
-          preloadThread(session.user.id, message.id);
+          console.log(`🕒 Hover threshold reached for email ${messageId}, initiating prefetch...`);
+          preloadThread(session.user.id, messageId, session.connectionId!);
           hasPrefetched.current = true;
         }
       }, HOVER_DELAY);
@@ -157,14 +151,16 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
             {message.unread ? <span className="ml-0.5 size-2 rounded-full bg-[#006FFE]" /> : null}
           </p>
         </div>
-        <p
-          className={cn(
-            "text-xs font-normal opacity-70 transition-opacity group-hover:opacity-100",
-            isMailSelected && "opacity-100",
-          )}
-        >
-          {formatDate(message.receivedOn)}
-        </p>
+        {message.receivedOn ? (
+          <p
+            className={cn(
+              "text-xs font-normal opacity-70 transition-opacity group-hover:opacity-100",
+              isMailSelected && "opacity-100",
+            )}
+          >
+            {formatDate(message.receivedOn.split(".")[0])}
+          </p>
+        ) : null}
       </div>
       <p
         className={cn(
@@ -183,6 +179,7 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
 export function MailList({ items, isCompact, folder }: MailListProps) {
   const [mail, setMail] = useMail();
   const { data: session } = useSession();
+  const [searchValue, setSearchValue] = useSearchValue();
 
   const massSelectMode = useKeyPressed(["Control", "Meta"]);
   const rangeSelectMode = useKeyPressed("Shift");
@@ -219,7 +216,7 @@ export function MailList({ items, isCompact, folder }: MailListProps) {
       return;
     }
 
-    if (mail.selected === message.id) {
+    if (mail.selected === message.threadId || mail.selected === message.id) {
       setMail({
         selected: null,
         bulkSelected: [],
@@ -227,15 +224,19 @@ export function MailList({ items, isCompact, folder }: MailListProps) {
     } else {
       setMail({
         ...mail,
-        selected: message.id,
+        selected: message.threadId ?? message.id,
         bulkSelected: [],
       });
     }
   };
 
   const isEmpty = items.length === 0;
+  const isFiltering = searchValue.value.trim().length > 0;
 
   if (isEmpty && session) {
+    if (isFiltering) {
+      return <EmptyState folder="search" className="min-h-[90vh] md:min-h-[90vh]" />;
+    }
     return <EmptyState folder={folder as FolderType} className="min-h-[90vh] md:min-h-[90vh]" />;
   }
 
@@ -243,7 +244,7 @@ export function MailList({ items, isCompact, folder }: MailListProps) {
     <ScrollArea className="h-full" type="scroll">
       <div
         className={cn(
-          "flex flex-col gap-1.5",
+          "flex flex-col gap-1.5 p-2",
           // Prevents accidental text selection while in range select mode.
           selectMode === "range" && "select-none",
         )}
