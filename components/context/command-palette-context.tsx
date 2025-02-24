@@ -15,24 +15,14 @@ import { useOpenComposeModal } from "@/hooks/use-open-compose-modal";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { navigationConfig, NavItem } from "@/config/navigation";
 import { ArrowUpRight, CircleHelp, Pencil } from "lucide-react";
-import { ArrowUpRight, CircleHelp, Pencil } from "lucide-react";
-import { useConnections } from "@/hooks/use-connections";
 import { useConnections } from "@/hooks/use-connections";
 import { useRouter, usePathname } from "next/navigation";
-import { useRouter, usePathname } from "next/navigation";
-import { keyboardShortcuts } from "@/config/shortcuts";
 import { keyboardShortcuts } from "@/config/shortcuts";
 import { useSession, $fetch } from "@/lib/auth-client";
-import { useSession, $fetch } from "@/lib/auth-client"; // Import $fetch
-import { useMemo, useState } from "react";
 import { useMemo, useState } from "react";
 import { IConnection } from "@/types";
-import { IConnection } from "@/types";
-import Image from "next/image";
 import Image from "next/image";
 import { toast } from "sonner";
-import { toast } from "sonner";
-import * as React from "react";
 import * as React from "react";
 
 type Props = {
@@ -44,6 +34,7 @@ type CommandPaletteContext = {
   setOpen: (open: boolean) => void;
   openModal: () => void;
 };
+
 const CommandPaletteContext = React.createContext<CommandPaletteContext | null>(null);
 
 export function useCommandPalette() {
@@ -53,7 +44,6 @@ export function useCommandPalette() {
   }
   return context;
 }
-
 export function CommandPaletteProvider({ children }: Props) {
   const [open, setOpen] = React.useState(false);
   const { open: openComposeModal } = useOpenComposeModal();
