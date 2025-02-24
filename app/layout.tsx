@@ -32,12 +32,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn(geistSans.variable, geistMono.variable, "antialiased")}>
         <Providers attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <Suspense>
-            <MailComposeModal />
-          </Suspense>
-          {children}
-          <Toast />
-          <Analytics />
+          <CommandPaletteProvider>
+            <Suspense>
+              <MailComposeModal />
+            </Suspense>
+            {children}
+            <Toast />
+            <Analytics />
+          </CommandPaletteProvider>
         </Providers>
       </body>
     </html>

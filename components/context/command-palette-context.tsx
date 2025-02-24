@@ -29,14 +29,11 @@ type Props = {
   children?: React.ReactNode | React.ReactNode[];
 };
 
-
-
 type CommandPaletteContext = {
   open: boolean;
   setOpen: (open: boolean) => void;
   openModal: () => void;
 };
-
 
 const CommandPaletteContext = React.createContext<CommandPaletteContext | null>(null);
 
@@ -47,7 +44,6 @@ export function useCommandPalette() {
   }
   return context;
 }
-
 
 export function CommandPaletteProvider({ children }: Props) {
   const [open, setOpen] = React.useState(false);
@@ -106,7 +102,6 @@ export function CommandPaletteProvider({ children }: Props) {
       ...otherCommands.map((section) => ({ group: section.group, items: section.item })),
     ];
 
-
     const filteredCommands = combinedCommands.map((group) => {
       if (group.group === "Settings") {
         return {
@@ -121,7 +116,6 @@ export function CommandPaletteProvider({ children }: Props) {
 
     return filteredCommands;
   }, [pathname]);
-
 
   const accountCommands = React.useMemo(() => {
     if (!session?.user || !connections?.length) {
@@ -202,7 +196,6 @@ export function CommandPaletteProvider({ children }: Props) {
       }))
       .filter((group) => group.items.length > 0);
   }, [allCommands, searchValue]);
-
 
   return (
     <CommandPaletteContext.Provider
