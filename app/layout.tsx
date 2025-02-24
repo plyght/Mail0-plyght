@@ -10,7 +10,7 @@ import { Suspense } from "react";
 import "./globals.css";
 
 // Import your CommandPaletteProvider
-import { CommandPaletteProvider } from "@/components/ui/command-palette";
+import { CommandPaletteProvider } from "@/components/context/command-palette-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

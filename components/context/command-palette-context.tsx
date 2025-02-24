@@ -19,8 +19,8 @@ import { useConnections } from "@/hooks/use-connections";
 import { useRouter, usePathname } from "next/navigation";
 import { keyboardShortcuts } from "@/config/shortcuts";
 import { useSession, $fetch } from "@/lib/auth-client";
-import { useMemo, useState } from "react";
 import { IConnection } from "@/types";
+import { useState } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 import * as React from "react";
@@ -44,6 +44,7 @@ export function useCommandPalette() {
   }
   return context;
 }
+
 export function CommandPaletteProvider({ children }: Props) {
   const [open, setOpen] = React.useState(false);
   const { open: openComposeModal } = useOpenComposeModal();
@@ -71,7 +72,7 @@ export function CommandPaletteProvider({ children }: Props) {
     command();
   }, []);
 
-  const allCommands = useMemo(() => {
+  const allCommands = React.useMemo(() => {
     const mailCommands: { group: string; item: NavItem }[] = [];
     const settingsCommands: { group: string; item: NavItem }[] = [];
     const otherCommands: { group: string; item: NavItem }[] = [];
@@ -117,7 +118,7 @@ export function CommandPaletteProvider({ children }: Props) {
     return filteredCommands;
   }, [pathname]);
 
-  const accountCommands = useMemo(() => {
+  const accountCommands = React.useMemo(() => {
     if (!session?.user || !connections?.length) {
       return [];
     }
@@ -179,7 +180,7 @@ export function CommandPaletteProvider({ children }: Props) {
   }, [session, connections, router, runCommand, mutate, refetch]); // Added refetch
 
   // Filter commands based on search
-  const filteredAccountCommands = useMemo(() => {
+  const filteredAccountCommands = React.useMemo(() => {
     const searchTerm = searchValue.toLowerCase();
     return accountCommands.filter(
       (command) =>
@@ -187,7 +188,7 @@ export function CommandPaletteProvider({ children }: Props) {
     );
   }, [accountCommands, searchValue]);
 
-  const filteredAllCommands = useMemo(() => {
+  const filteredAllCommands = React.useMemo(() => {
     const searchTerm = searchValue.toLowerCase();
     return allCommands
       .map((group) => ({
@@ -279,7 +280,6 @@ export function CommandPaletteProvider({ children }: Props) {
               </CommandGroup>
             </>
           )}
-
           <CommandSeparator />
           <CommandGroup heading="Help">
             <CommandItem onSelect={() => runCommand(() => console.log("Help with shortcuts"))}>
