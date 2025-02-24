@@ -11,6 +11,7 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
+import axios from "axios";
 import { z } from "zod";
 
 const betaSignupSchema = z.object({
@@ -32,31 +33,11 @@ export default function Hero() {
     try {
       console.log("Starting form submission with email:", values.email);
 
-      const response = await fetch("/api/auth/early-access", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: values.email }),
+      const response = await axios.post("/api/auth/early-access", {
+        email: values.email,
       });
 
-      // Log the raw response text first
-      const rawText = await response.text();
-      console.log("Raw response:", rawText);
-
-      // Try to parse as JSON
-      let data;
-      try {
-        data = JSON.parse(rawText);
-        console.log("Parsed response data:", data);
-      } catch (parseError) {
-        console.error("Failed to parse response as JSON:", parseError);
-        throw new Error("Invalid server response");
-      }
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to sign up");
-      }
+      console.log("Response data:", response.data);
 
       form.reset();
       console.log("Form submission successful");

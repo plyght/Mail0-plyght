@@ -11,7 +11,7 @@ import { BellIcon } from "@/components/icons/animated/bell";
 import { XIcon } from "@/components/icons/animated/x";
 import { ChevronLeft } from "lucide-react";
 
-interface NavItem {
+export interface NavItem {
   title: string;
   url: string;
   icon: React.ComponentType<any>;

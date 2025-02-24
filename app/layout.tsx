@@ -1,4 +1,3 @@
-// app/layout.tsx
 import MailComposeModal from "@/components/mail/mail-compose-modal";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
@@ -33,14 +32,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn(geistSans.variable, geistMono.variable, "antialiased")}>
         <Providers attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <CommandPaletteProvider>
-            <Suspense>
-              <MailComposeModal />
-            </Suspense>
-            {children}
-            <Toast />
-            <Analytics />
-          </CommandPaletteProvider>
+          <Suspense>
+            <MailComposeModal />
+          </Suspense>
+          {children}
+          <Toast />
+          <Analytics />
         </Providers>
       </body>
     </html>
