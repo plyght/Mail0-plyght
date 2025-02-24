@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandPaletteProvider } from "@/components/context/command-palette-context";
 import { dexieStorageProvider } from "@/lib/idb";
 import { SWRConfig } from "swr";
 
@@ -13,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           revalidateOnFocus: false,
         }}
       >
-        {children}
+        <CommandPaletteProvider>{children}</CommandPaletteProvider>
       </SWRConfig>
     </div>
   );

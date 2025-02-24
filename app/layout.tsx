@@ -8,9 +8,6 @@ import { cn } from "@/lib/utils";
 import { Suspense } from "react";
 import "./globals.css";
 
-// Import your CommandPaletteProvider
-import { CommandPaletteProvider } from "@/components/context/command-palette-context";
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,14 +29,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={cn(geistSans.variable, geistMono.variable, "antialiased")}>
         <Providers attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <CommandPaletteProvider>
-            <Suspense>
-              <MailComposeModal />
-            </Suspense>
-            {children}
-            <Toast />
-            <Analytics />
-          </CommandPaletteProvider>
+          <Suspense>
+            <MailComposeModal />
+          </Suspense>
+          {children}
+          <Toast />
+          <Analytics />
         </Providers>
       </body>
     </html>
