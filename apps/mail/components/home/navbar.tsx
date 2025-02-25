@@ -25,7 +25,7 @@ export default function Navbar() {
       <Image src="/white-icon.svg" alt="Mail0" className="h-9 w-9" width={180} height={180} />
 
       {/* Desktop Navigation */}
-      <div className="absolute left-1/2 hidden -translate-x-1/2 gap-10 text-sm text-muted-foreground lg:flex">
+      <div className="text-muted-foreground absolute left-1/2 hidden -translate-x-1/2 gap-10 text-sm lg:flex">
         <Link href="/">About us</Link>
         <Link href="https://github.com/nizzyabi/Mail0">Github</Link>
         <Link href="/">Pricing</Link>
@@ -36,7 +36,7 @@ export default function Navbar() {
       <div className="lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild className="cursor-pointer">
-            <Menu className="h-9 w-9 rounded-md p-2 hover:bg-accent" />
+            <Menu className="hover:bg-accent h-9 w-9 rounded-md p-2" />
           </SheetTrigger>
           <SheetContent
             side="top"
@@ -57,7 +57,7 @@ export default function Navbar() {
                   height={180}
                 />
                 <SheetTrigger asChild>
-                  <X className="h-9 w-9 cursor-pointer rounded-md p-2 hover:bg-accent" />
+                  <X className="hover:bg-accent h-9 w-9 cursor-pointer rounded-md p-2" />
                 </SheetTrigger>
               </div>
               <div className="mt-7 space-y-4 px-3">

@@ -12,13 +12,13 @@ export default function TermsOfService() {
   const router = useRouter();
 
   return (
-    <div className="relative min-h-screen w-full bg-background">
+    <div className="bg-background relative min-h-screen w-full">
       {/* Back Button */}
       <div className="absolute left-4 top-4 md:left-8 md:top-8">
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2 text-muted-foreground hover:text-foreground"
+          className="text-muted-foreground hover:text-foreground gap-2"
           onClick={() => router.back()}
         >
           <ArrowLeft className="h-4 w-4" />
@@ -31,7 +31,7 @@ export default function TermsOfService() {
           <CardHeader className="space-y-4">
             <div className="space-y-2 text-center">
               <CardTitle className="text-4xl font-bold tracking-tight">Terms of Service</CardTitle>
-              <p className="text-sm text-muted-foreground">Last updated: {LAST_UPDATED}</p>
+              <p className="text-muted-foreground text-sm">Last updated: {LAST_UPDATED}</p>
             </div>
           </CardHeader>
 
@@ -39,7 +39,7 @@ export default function TermsOfService() {
             {sections.map((section) => (
               <div
                 key={section.title}
-                className="group rounded-xl border bg-card/50 p-6 shadow-sm transition-all hover:bg-card/80"
+                className="bg-card/50 hover:bg-card/80 group rounded-xl border p-6 shadow-sm transition-all"
               >
                 <h2 className="mb-4 text-xl font-semibold tracking-tight">{section.title}</h2>
                 <div className="prose prose-sm prose-zinc dark:prose-invert max-w-none">
@@ -79,7 +79,7 @@ const sections = [
     content: (
       <div className="space-y-8">
         <div>
-          <h3 className="mb-3 text-xl font-medium text-card-foreground">Self-Hosted Service</h3>
+          <h3 className="text-card-foreground mb-3 text-xl font-medium">Self-Hosted Service</h3>
           <ul className="ml-4 list-disc space-y-2">
             <li>Mail0.io provides software that users can deploy on their own infrastructure</li>
             <li>Users are responsible for their own hosting, maintenance, and compliance</li>
@@ -87,7 +87,7 @@ const sections = [
           </ul>
         </div>
         <div>
-          <h3 className="mb-3 text-xl font-medium text-card-foreground">
+          <h3 className="text-card-foreground mb-3 text-xl font-medium">
             External Email Integration
           </h3>
           <ul className="ml-4 list-disc space-y-2">
@@ -102,7 +102,7 @@ const sections = [
   {
     title: "User Responsibilities",
     content: (
-      <div className="mt-4 space-y-3 text-muted-foreground">
+      <div className="text-muted-foreground mt-4 space-y-3">
         <p>Users agree to:</p>
         <ul className="ml-4 list-disc space-y-2">
           <li>Comply with all applicable laws and regulations</li>
@@ -117,7 +117,7 @@ const sections = [
   {
     title: "Software License",
     content: (
-      <div className="mt-4 space-y-3 text-muted-foreground">
+      <div className="text-muted-foreground mt-4 space-y-3">
         <p>Mail0.io is licensed under the MIT License:</p>
         <ul className="ml-4 list-disc space-y-2">
           <li>Users can freely use, modify, and distribute the software</li>
@@ -130,7 +130,7 @@ const sections = [
   {
     title: "Community Guidelines",
     content: (
-      <div className="mt-4 space-y-3 text-muted-foreground">
+      <div className="text-muted-foreground mt-4 space-y-3">
         <p>Users participating in our community agree to:</p>
         <ul className="ml-4 list-disc space-y-2">
           <li>Follow our code of conduct</li>
@@ -144,7 +144,7 @@ const sections = [
   {
     title: "Contact Information",
     content: (
-      <div className="mt-4 space-y-3 text-muted-foreground">
+      <div className="text-muted-foreground mt-4 space-y-3">
         <p>For questions about these terms:</p>
         <div className="flex flex-col space-y-2">
           <a

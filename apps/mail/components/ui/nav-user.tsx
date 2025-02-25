@@ -87,11 +87,11 @@ export function NavUser() {
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="group mt-2 h-[32px] bg-transparent px-0 hover:bg-transparent data-[state=open]:text-sidebar-accent-foreground"
+              className="data-[state=open]:text-sidebar-accent-foreground group mt-2 h-[32px] bg-transparent px-0 hover:bg-transparent"
             >
               {isLoading ? (
                 <>
-                  <div className="size-8 animate-pulse rounded-lg bg-primary/10" />
+                  <div className="bg-primary/10 size-8 animate-pulse rounded-lg" />
                 </>
               ) : (
                 <>
@@ -119,7 +119,7 @@ export function NavUser() {
                     <span className="truncate font-medium tracking-tight">
                       {activeAccount?.name || session?.user.name || "User"}
                     </span>
-                    <span className="truncate text-[11px] text-muted-foreground/70">
+                    <span className="text-muted-foreground/70 truncate text-[11px]">
                       {activeAccount?.email || session?.user.email}
                     </span>
                   </div>
@@ -164,7 +164,7 @@ export function NavUser() {
         <div className="space-y-1">
           {session ? (
             <>
-              <div className="px-1 py-1.5 text-[11px] text-muted-foreground">Accounts</div>
+              <div className="text-muted-foreground px-1 py-1.5 text-[11px]">Accounts</div>
               {connections?.map((connection) => (
                 <DropdownMenuItem
                   key={connection.id}
@@ -191,7 +191,7 @@ export function NavUser() {
                   <div className="-space-y-1">
                     <p className="text-[12px]">{connection.name || connection.email}</p>
                     {connection.name && (
-                      <p className="text-[12px] text-muted-foreground">
+                      <p className="text-muted-foreground text-[12px]">
                         {connection.email.length > 25
                           ? `${connection.email.slice(0, 25)}...`
                           : connection.email}

@@ -46,13 +46,13 @@ const MailDisplay = ({ emailData, isFullscreen, isMuted, index }: Props) => {
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-start gap-2">
                   <span className="font-semibold">{emailData?.sender?.name}</span>
-                  <span className="flex grow-0 items-center gap-2 text-sm text-muted-foreground">
+                  <span className="text-muted-foreground flex grow-0 items-center gap-2 text-sm">
                     <span>{emailData?.sender?.email}</span>
                     {isMuted && <BellOff className="h-4 w-4" />}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <time className="text-xs text-muted-foreground">
+                  <time className="text-muted-foreground text-xs">
                     {format(new Date(emailData?.receivedOn), "PPp")}
                   </time>
                   <Popover open={openDetailsPopover} onOpenChange={setOpenDetailsPopover}>
@@ -74,7 +74,7 @@ const MailDisplay = ({ emailData, isFullscreen, isMuted, index }: Props) => {
                         <div className="flex">
                           <span className="w-24 text-end text-gray-500">From:</span>
                           <div className="ml-3">
-                            <span className="pr-1 font-bold text-muted-foreground">
+                            <span className="text-muted-foreground pr-1 font-bold">
                               {emailData?.sender?.name}
                             </span>
                             <span className="text-muted-foreground">
@@ -84,37 +84,37 @@ const MailDisplay = ({ emailData, isFullscreen, isMuted, index }: Props) => {
                         </div>
                         <div className="flex">
                           <span className="w-24 text-end text-gray-500">To:</span>
-                          <span className="ml-3 text-muted-foreground">
+                          <span className="text-muted-foreground ml-3">
                             {emailData?.sender?.email}
                           </span>
                         </div>
                         <div className="flex">
                           <span className="w-24 text-end text-gray-500">Cc:</span>
-                          <span className="ml-3 text-muted-foreground">
+                          <span className="text-muted-foreground ml-3">
                             {emailData?.sender?.email}
                           </span>
                         </div>
                         <div className="flex">
                           <span className="w-24 text-end text-gray-500">Date:</span>
-                          <span className="ml-3 text-muted-foreground">
+                          <span className="text-muted-foreground ml-3">
                             {format(new Date(emailData?.receivedOn), "PPpp")}
                           </span>
                         </div>
                         <div className="flex">
                           <span className="w-24 text-end text-gray-500">Mailed-By:</span>
-                          <span className="ml-3 text-muted-foreground">
+                          <span className="text-muted-foreground ml-3">
                             {emailData?.sender?.email}
                           </span>
                         </div>
                         <div className="flex">
                           <span className="w-24 text-end text-gray-500">Signed-By:</span>
-                          <span className="ml-3 text-muted-foreground">
+                          <span className="text-muted-foreground ml-3">
                             {emailData?.sender?.email}
                           </span>
                         </div>
                         <div className="flex items-center">
                           <span className="w-24 text-end text-gray-500">Security:</span>
-                          <div className="ml-3 flex items-center gap-1 text-muted-foreground">
+                          <div className="text-muted-foreground ml-3 flex items-center gap-1">
                             <Lock className="h-4 w-4 text-green-600" /> Standard encryption (TLS)
                           </div>
                         </div>
@@ -162,7 +162,7 @@ const MailDisplay = ({ emailData, isFullscreen, isMuted, index }: Props) => {
                   className="flex h-[500px] w-full items-center justify-center"
                   style={{ minHeight: "500px" }}
                 >
-                  <div className="h-32 w-32 animate-pulse rounded-full bg-secondary" />
+                  <div className="bg-secondary h-32 w-32 animate-pulse rounded-full" />
                 </div>
               )}
             </div>

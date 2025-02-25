@@ -62,13 +62,13 @@ export function Draft() {
                     </Button>
                   </div>
                 </div>
-                <div className="bg-background backdrop-blur supports-[backdrop-filter]:bg-background">
+                <div className="bg-background supports-[backdrop-filter]:bg-background backdrop-blur">
                   <form className="flex space-x-1.5 p-4 pt-0">
                     <div className="flex w-full items-center space-x-3 rounded-md border p-2 px-3">
                       <SearchIcon />
                       <input
                         type="text"
-                        className="w-full flex-1 border-none bg-background outline-none"
+                        className="bg-background w-full flex-1 border-none outline-none"
                         placeholder="Search drafts"
                       />
                     </div>
@@ -77,13 +77,13 @@ export function Draft() {
                 <Separator />
                 <TabsContent value="all" className="m-0">
                   {drafts.length === 0 ? (
-                    <div className="p-8 text-center text-muted-foreground">No drafts available</div>
+                    <div className="text-muted-foreground p-8 text-center">No drafts available</div>
                   ) : (
                     <div className="space-y-1">
                       {drafts.map((draft) => (
                         <div
                           key={draft.id}
-                          className={`flex cursor-pointer items-center justify-between p-4 transition-colors hover:bg-secondary/80 ${
+                          className={`hover:bg-secondary/80 flex cursor-pointer items-center justify-between p-4 transition-colors ${
                             selectedDraft?.id === draft.id ? "bg-secondary" : ""
                           }`}
                           onClick={() => {
@@ -94,7 +94,7 @@ export function Draft() {
                             <h3 className="truncate font-medium">
                               {draft.subject || "No subject"}
                             </h3>
-                            <p className="mt-1 truncate text-sm text-muted-foreground">
+                            <p className="text-muted-foreground mt-1 truncate text-sm">
                               {draft.message?.substring(0, 50) || "No message"}...
                             </p>
                           </div>
@@ -106,7 +106,7 @@ export function Draft() {
                                 e.stopPropagation();
                                 removeDraft(draft.id);
                               }}
-                              className="opacity-100 hover:bg-destructive hover:text-destructive-foreground group-hover:opacity-100"
+                              className="hover:bg-destructive hover:text-destructive-foreground opacity-100 group-hover:opacity-100"
                             >
                               <Trash2 />
                             </Button>
@@ -158,13 +158,13 @@ export function Draft() {
                   <input
                     type="text"
                     placeholder="Subject"
-                    className="mb-4 w-full rounded-md border bg-background p-2"
+                    className="bg-background mb-4 w-full rounded-md border p-2"
                     value={selectedDraft.subject || ""}
                     onChange={(e) => handleInputChange("subject", e.target.value)}
                   />
                   <textarea
                     placeholder="Write your message..."
-                    className="h-[calc(100%-120px)] w-full resize-none rounded-md border bg-background p-2"
+                    className="bg-background h-[calc(100%-120px)] w-full resize-none rounded-md border p-2"
                     value={selectedDraft.message || ""}
                     onChange={(e) => handleInputChange("message", e.target.value)}
                   />

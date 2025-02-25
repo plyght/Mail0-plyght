@@ -117,14 +117,14 @@ export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[]
   };
 
   return (
-    <div className="w-full bg-offsetLight p-2 dark:bg-offsetDark">
+    <div className="bg-offsetLight dark:bg-offsetDark w-full p-2">
       <form
         className={cn(
-          "flex h-72 flex-col space-y-2.5 rounded-[10px] border border-border px-2 py-4",
+          "border-border flex h-72 flex-col space-y-2.5 rounded-[10px] border px-2 py-4",
           isTextAreaFocused ? "ring-2 ring-[#3D3D3D]" : "",
         )}
       >
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex items-center justify-between text-sm">
           <div className="flex items-center gap-2">
             <Reply className="h-4 w-4" />
             <p className="truncate">
@@ -136,7 +136,7 @@ export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[]
 
         <Textarea
           ref={editorRef}
-          className="min-h-[40px] w-full flex-grow resize-none rounded-2xl border-0 bg-transparent leading-relaxed placeholder:text-muted-foreground/70 focus:outline-none md:text-base"
+          className="placeholder:text-muted-foreground/70 min-h-[40px] w-full flex-grow resize-none rounded-2xl border-0 bg-transparent leading-relaxed focus:outline-none md:text-base"
           placeholder="Write your reply..."
           spellCheck={true}
           value={messageContent}
@@ -153,7 +153,7 @@ export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[]
               {isUploading && (
                 <Badge
                   variant="secondary"
-                  className="inline-flex shrink-0 animate-pulse items-center bg-background/50 px-2 py-1.5 text-xs"
+                  className="bg-background/50 inline-flex shrink-0 animate-pulse items-center px-2 py-1.5 text-xs"
                 >
                   Uploading...
                 </Badge>
@@ -164,13 +164,13 @@ export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[]
                     <Badge
                       key={index}
                       variant="secondary"
-                      className="inline-flex shrink-0 items-center gap-1 bg-background/50 px-2 py-1.5 text-xs"
+                      className="bg-background/50 inline-flex shrink-0 items-center gap-1 px-2 py-1.5 text-xs"
                     >
                       <span className="max-w-[120px] truncate">{truncateFileName(file.name)}</span>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="ml-1 h-4 w-4 hover:bg-background/80"
+                        className="hover:bg-background/80 ml-1 h-4 w-4"
                         onClick={(e) => {
                           e.preventDefault();
                           removeAttachment(index);
@@ -191,16 +191,16 @@ export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[]
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center p-4">
-                          <FileIcon className="h-16 w-16 text-primary" />
+                          <FileIcon className="text-primary h-16 w-16" />
                         </div>
                       )}
                     </div>
                     <div className="bg-secondary p-2">
                       <p className="text-sm font-medium">{truncateFileName(file.name, 30)}</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Size: {(file.size / (1024 * 1024)).toFixed(2)} MB
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Last modified: {new Date(file.lastModified).toLocaleDateString()}
                       </p>
                     </div>
@@ -219,7 +219,7 @@ export default function ReplyCompose({ emailData }: { emailData: ParsedMessage[]
                   variant="ghost"
                   size="icon"
                   type="button"
-                  className="h-8 w-8 hover:bg-background/80"
+                  className="hover:bg-background/80 h-8 w-8"
                   onClick={(e) => {
                     e.preventDefault();
                     document.getElementById("attachment-input")?.click();

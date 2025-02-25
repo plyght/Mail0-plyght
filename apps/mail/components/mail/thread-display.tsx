@@ -78,9 +78,9 @@ export function ThreadDisplay({ mail, onClose, isMobile }: ThreadDisplayProps) {
       <div className="flex h-screen flex-col">
         <div
           className={cn(
-            "relative flex h-full flex-col bg-background transition-all duration-300",
+            "bg-background relative flex h-full flex-col transition-all duration-300",
             isMobile ? "" : "rounded-r-lg",
-            isFullscreen ? "fixed inset-0 z-50 bg-background" : "",
+            isFullscreen ? "bg-background fixed inset-0 z-50" : "",
           )}
         >
           <MailHeaderSkeleton isFullscreen={isFullscreen} />
@@ -100,7 +100,7 @@ export function ThreadDisplay({ mail, onClose, isMobile }: ThreadDisplayProps) {
     >
       <div
         className={cn(
-          "relative flex flex-col overflow-hidden bg-offsetLight transition-all duration-300 dark:bg-offsetDark",
+          "bg-offsetLight dark:bg-offsetDark relative flex flex-col overflow-hidden transition-all duration-300",
           isMobile ? "h-full" : "h-full",
           !isMobile && !isFullscreen && "rounded-r-lg",
           isFullscreen ? "fixed inset-0 z-50" : "",
@@ -219,7 +219,7 @@ export function ThreadDisplay({ mail, onClose, isMobile }: ThreadDisplayProps) {
                   key={message.id}
                   className={cn(
                     "transition-all duration-200",
-                    index > 0 && "border-t border-border",
+                    index > 0 && "border-border border-t",
                   )}
                 >
                   <MailDisplay

@@ -168,16 +168,16 @@ export function MailCompose({ onClose, replyTo }: MailComposeProps) {
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center p-4">
-                      <FileIcon className="h-16 w-16 text-primary" />
+                      <FileIcon className="text-primary h-16 w-16" />
                     </div>
                   )}
                 </div>
                 <div className="bg-secondary p-2">
                   <p className="text-sm font-medium">{truncateFileName(file.name, 30)}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     Size: {(file.size / (1024 * 1024)).toFixed(2)} MB
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     Last modified: {new Date(file.lastModified).toLocaleDateString()}
                   </p>
                 </div>
@@ -189,7 +189,7 @@ export function MailCompose({ onClose, replyTo }: MailComposeProps) {
         {hasHiddenAttachments && (
           <Popover>
             <PopoverTrigger asChild>
-              <Badge variant="secondary" className="cursor-pointer hover:bg-secondary/80">
+              <Badge variant="secondary" className="hover:bg-secondary/80 cursor-pointer">
                 +{attachments.length - MAX_VISIBLE_ATTACHMENTS} more...
               </Badge>
             </PopoverTrigger>
@@ -201,7 +201,7 @@ export function MailCompose({ onClose, replyTo }: MailComposeProps) {
               <div className="space-y-2">
                 <div className="px-1">
                   <h4 className="font-medium leading-none">Attachments</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     {attachments.length} files attached
                   </p>
                 </div>
@@ -221,7 +221,7 @@ export function MailCompose({ onClose, replyTo }: MailComposeProps) {
                         <TooltipTrigger asChild>
                           <div
                             key={index}
-                            className="flex items-center justify-between rounded-md p-2 hover:bg-muted"
+                            className="hover:bg-muted flex items-center justify-between rounded-md p-2"
                           >
                             <div className="flex items-center gap-2 overflow-hidden">
                               <Paperclip className="h-4 w-4 flex-shrink-0" />
@@ -254,16 +254,16 @@ export function MailCompose({ onClose, replyTo }: MailComposeProps) {
                               />
                             ) : (
                               <div className="flex h-full w-full items-center justify-center p-4">
-                                <FileIcon className="h-16 w-16 text-primary" />
+                                <FileIcon className="text-primary h-16 w-16" />
                               </div>
                             )}
                           </div>
                           <div className="bg-secondary p-2">
                             <p className="text-sm font-medium">{file.name}</p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-muted-foreground text-xs">
                               Size: {(file.size / (1024 * 1024)).toFixed(2)} MB
                             </p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-muted-foreground text-xs">
                               Last modified: {new Date(file.lastModified).toLocaleDateString()}
                             </p>
                           </div>
@@ -303,7 +303,7 @@ export function MailCompose({ onClose, replyTo }: MailComposeProps) {
                   }}
                 />
                 {showSuggestions && filteredSuggestions.length > 0 && (
-                  <ul className="absolute left-0 right-0 top-full z-10 mt-1 max-h-40 overflow-auto rounded-md border border-input bg-background shadow-lg">
+                  <ul className="border-input bg-background absolute left-0 right-0 top-full z-10 mt-1 max-h-40 overflow-auto rounded-md border shadow-lg">
                     {filteredSuggestions.map((email, index) => (
                       <li
                         key={index}
@@ -311,7 +311,7 @@ export function MailCompose({ onClose, replyTo }: MailComposeProps) {
                           setToInput(email);
                           setShowSuggestions(false);
                         }}
-                        className="cursor-pointer p-2 hover:bg-muted"
+                        className="hover:bg-muted cursor-pointer p-2"
                       >
                         {email}
                       </li>
@@ -385,7 +385,7 @@ export function MailCompose({ onClose, replyTo }: MailComposeProps) {
               <div
                 ref={editorRef}
                 contentEditable
-                className="min-h-[300px] w-full resize-none overflow-y-auto rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring min-h-[300px] w-full resize-none overflow-y-auto rounded-md border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 role="textbox"
                 aria-multiline="true"
                 tabIndex={9}

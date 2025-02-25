@@ -19,4 +19,3 @@ export const GET = async ({ headers }: NextRequest) => {
   });
   return new Response(JSON.stringify(await driver.count()));
 };
-

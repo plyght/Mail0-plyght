@@ -119,7 +119,7 @@ export function Mail({ folder }: MailProps) {
             defaultSize={isMobile ? 100 : 25}
             minSize={isMobile ? 100 : 25}
           >
-            <div className="flex-1 flex-col overflow-y-auto bg-offsetLight shadow-inner dark:bg-offsetDark md:flex md:rounded-2xl md:border md:shadow-sm">
+            <div className="bg-offsetLight dark:bg-offsetDark flex-1 flex-col overflow-y-auto shadow-inner md:flex md:rounded-2xl md:border md:shadow-sm">
               <div
                 className={cn(
                   "sticky top-0 z-10 flex items-center justify-between gap-1.5 border-b-2 p-2 transition-colors",
@@ -159,7 +159,7 @@ export function Mail({ folder }: MailProps) {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="ml-1.5 h-8 w-fit px-2 text-muted-foreground"
+                                className="text-muted-foreground ml-1.5 h-8 w-fit px-2"
                                 onClick={() => setMail({ ...mail, bulkSelected: [] })}
                               >
                                 <X />
@@ -239,7 +239,7 @@ export function Mail({ folder }: MailProps) {
         {/* Mobile Drawer */}
         {isMobile && (
           <Drawer open={open} onOpenChange={setOpen}>
-            <DrawerContent className="h-[calc(100vh-3rem)] overflow-hidden bg-offsetLight p-0 dark:bg-offsetDark">
+            <DrawerContent className="bg-offsetLight dark:bg-offsetDark h-[calc(100vh-3rem)] overflow-hidden p-0">
               <DrawerHeader className="sr-only">
                 <DrawerTitle>Email Details</DrawerTitle>
               </DrawerHeader>

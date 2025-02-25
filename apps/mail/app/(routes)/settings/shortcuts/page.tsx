@@ -34,13 +34,13 @@ export default function ShortcutsPage() {
 
 function Shortcut({ children, keys }: { children: ReactNode; keys: string[] }) {
   return (
-    <div className="flex items-center justify-between gap-2 rounded-lg border bg-card/50 p-2 text-sm text-muted-foreground">
+    <div className="bg-card/50 text-muted-foreground flex items-center justify-between gap-2 rounded-lg border p-2 text-sm">
       <span className="font-medium">{children}</span>
       <div className="flex select-none gap-1">
         {keys.map((key) => (
           <kbd
             key={key}
-            className="h-6 rounded-[6px] border border-muted-foreground/10 bg-accent px-1.5 font-mono text-xs leading-6"
+            className="border-muted-foreground/10 bg-accent h-6 rounded-[6px] border px-1.5 font-mono text-xs leading-6"
           >
             {key}
           </kbd>

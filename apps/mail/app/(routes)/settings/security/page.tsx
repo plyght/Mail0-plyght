@@ -27,7 +27,7 @@ export default function SecurityPage() {
             <div className="flex items-center justify-between pt-2">
               <div className="space-y-1">
                 <Label className="text-base">Two-Factor Authentication</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Add an extra layer of security to your account
                 </p>
               </div>
@@ -36,7 +36,7 @@ export default function SecurityPage() {
             <div className="flex items-center justify-between pt-6">
               <div className="space-y-1">
                 <Label className="text-base">Login Notifications</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Get notified about new login attempts
                 </p>
               </div>

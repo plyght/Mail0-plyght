@@ -50,15 +50,15 @@ export default function ConnectionsPage() {
                         height={48}
                       />
                     ) : (
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                        <svg viewBox="0 0 24 24" className="h-6 w-6 text-primary">
+                      <div className="bg-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded-lg">
+                        <svg viewBox="0 0 24 24" className="text-primary h-6 w-6">
                           <path fill="currentColor" d={emailProviders[0].icon} />
                         </svg>
                       </div>
                     )}
                     <div className="flex min-w-0 flex-col gap-1">
                       <span className="truncate text-sm font-medium">{connection.name}</span>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <div className="text-muted-foreground flex items-center gap-2 text-xs">
                         <Tooltip
                           delayDuration={0}
                           open={openTooltip === connection.id}
@@ -86,7 +86,7 @@ export default function ConnectionsPage() {
                             <div className="font-mono">{connection.email}</div>
                           </TooltipContent>
                         </Tooltip>
-                        <span className="h-1 w-1 shrink-0 rounded-full bg-muted-foreground/30" />
+                        <span className="bg-muted-foreground/30 h-1 w-1 shrink-0 rounded-full" />
                         <span className="shrink-0">Connected</span>
                       </div>
                     </div>
@@ -96,7 +96,7 @@ export default function ConnectionsPage() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="shrink-0 text-muted-foreground hover:text-primary"
+                        className="text-muted-foreground hover:text-primary shrink-0"
                       >
                         <Trash className="h-4 w-4" />
                       </Button>

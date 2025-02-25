@@ -56,12 +56,12 @@ export default function Hero() {
   };
 
   return (
-    <div className="mx-auto w-full animate-fade-in pt-20 md:px-0 md:pt-20">
+    <div className="animate-fade-in mx-auto w-full pt-20 md:px-0 md:pt-20">
       <p className="text-center text-4xl font-semibold leading-tight tracking-[-0.03em] sm:text-6xl md:px-0">
         The future of email <span className="text-shinyGray">is here</span>
       </p>
       <div className="mx-auto w-full max-w-4xl">
-        <Balancer className="mx-auto mt-3 text-center text-[15px] leading-tight text-shinyGray sm:text-[22px]">
+        <Balancer className="text-shinyGray mx-auto mt-3 text-center text-[15px] leading-tight sm:text-[22px]">
           Experience email the way you want with <span className="font-mono">0</span> – the first
           open source email app that puts your privacy and safety first.
         </Balancer>
@@ -73,7 +73,7 @@ export default function Hero() {
             <div className="flex items-center justify-center gap-4">
               <Button
                 variant="outline"
-                className="flex h-[40px] w-[170px] items-center justify-center rounded-md bg-black text-white hover:bg-accent hover:text-white"
+                className="hover:bg-accent flex h-[40px] w-[170px] items-center justify-center rounded-md bg-black text-white hover:text-white"
                 asChild
               >
                 <Link href="/login">

@@ -32,7 +32,7 @@ function SettingsLayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AppSidebar className="hidden lg:flex" />
-      <div className="w-full bg-white dark:bg-black md:p-3">
+      <div className="w-full bg-white md:p-3 dark:bg-black">
         <div className="rounded-inherit flex">
           <ResizablePanelGroup
             direction="horizontal"
@@ -44,7 +44,7 @@ function SettingsLayoutContent({ children }: { children: React.ReactNode }) {
               defaultSize={isMobile ? 100 : 35}
               minSize={isMobile ? 100 : 35}
             >
-              <div className="md:shadow-s flex-1 flex-col overflow-y-auto bg-offsetLight shadow-inner dark:bg-offsetDark md:flex md:rounded-2xl md:border">
+              <div className="md:shadow-s bg-offsetLight dark:bg-offsetDark flex-1 flex-col overflow-y-auto shadow-inner md:flex md:rounded-2xl md:border">
                 <div className="sticky top-0 z-10 flex items-center justify-between gap-1.5 p-2">
                   <SidebarToggle className="h-fit px-2" />
                 </div>
@@ -64,8 +64,8 @@ function SettingsLayoutSkeleton() {
   return (
     <>
       <div className="hidden lg:flex lg:w-80" />
-      <div className="w-full bg-sidebar md:p-3">
-        <div className="h-[calc(100svh-1.5rem)] animate-pulse bg-muted md:rounded-2xl" />
+      <div className="bg-sidebar w-full md:p-3">
+        <div className="bg-muted h-[calc(100svh-1.5rem)] animate-pulse md:rounded-2xl" />
       </div>
     </>
   );

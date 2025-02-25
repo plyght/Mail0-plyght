@@ -35,4 +35,3 @@ export const GET = async (
   const res = await driver.get(id);
   return new Response(JSON.stringify(res));
 };
-

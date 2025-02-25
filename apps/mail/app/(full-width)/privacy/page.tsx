@@ -12,13 +12,13 @@ export default function PrivacyPolicy() {
   const router = useRouter();
 
   return (
-    <div className="relative min-h-screen w-full bg-background">
+    <div className="bg-background relative min-h-screen w-full">
       {/* Back Button */}
       <div className="absolute left-4 top-4 md:left-8 md:top-8">
         <Button
           variant="ghost"
           size="sm"
-          className="gap-2 text-muted-foreground hover:text-foreground"
+          className="text-muted-foreground hover:text-foreground gap-2"
           onClick={() => router.back()}
         >
           <ArrowLeft className="h-4 w-4" />
@@ -32,8 +32,8 @@ export default function PrivacyPolicy() {
             <div className="space-y-2 text-center">
               <CardTitle className="text-4xl font-bold tracking-tight">Privacy Policy</CardTitle>
               <div className="flex items-center justify-center gap-2">
-                <p className="text-sm text-muted-foreground">Last updated: {LAST_UPDATED}</p>
-                <span className="text-sm text-muted-foreground">•</span>
+                <p className="text-muted-foreground text-sm">Last updated: {LAST_UPDATED}</p>
+                <span className="text-muted-foreground text-sm">•</span>
                 <a href="/terms" className="text-sm">
                   Terms of Service
                 </a>
@@ -45,7 +45,7 @@ export default function PrivacyPolicy() {
             {sections.map((section) => (
               <div
                 key={section.title}
-                className="group rounded-xl border bg-card/50 p-6 shadow-sm transition-all hover:bg-card/80"
+                className="bg-card/50 hover:bg-card/80 group rounded-xl border p-6 shadow-sm transition-all"
               >
                 <h2 className="mb-4 text-xl font-semibold tracking-tight">{section.title}</h2>
                 <div className="prose prose-sm prose-zinc dark:prose-invert max-w-none">

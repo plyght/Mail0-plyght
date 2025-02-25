@@ -5,8 +5,8 @@ import { betterAuth, BetterAuthOptions } from "better-auth";
 import { customSession } from "better-auth/plugins";
 import { eq } from "drizzle-orm";
 import { Resend } from "resend";
-import { env } from "./env";
 import { db } from "@zero/db";
+import { env } from "./env";
 
 // If there is no resend key, it might be a local dev environment
 // In that case, we don't want to send emails and just log them

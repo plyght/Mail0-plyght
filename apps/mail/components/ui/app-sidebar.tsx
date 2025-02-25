@@ -107,7 +107,7 @@ function ComposeButton() {
   return (
     <Button
       onClick={open}
-      className="relative isolate mt-1 h-8 w-[calc(100%)] overflow-hidden whitespace-nowrap bg-secondary bg-subtleWhite text-primary shadow-inner hover:bg-subtleWhite dark:bg-subtleBlack dark:hover:bg-subtleBlack"
+      className="bg-secondary bg-subtleWhite text-primary hover:bg-subtleWhite dark:bg-subtleBlack dark:hover:bg-subtleBlack relative isolate mt-1 h-8 w-[calc(100%)] overflow-hidden whitespace-nowrap shadow-inner"
       onMouseEnter={() => () => iconRef.current?.startAnimation?.()}
       onMouseLeave={() => () => iconRef.current?.stopAnimation?.()}
     >

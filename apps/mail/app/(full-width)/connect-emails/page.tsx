@@ -51,7 +51,7 @@ export default function ConnectEmails() {
   ];
 
   return (
-    <div className="flex h-dvh w-screen items-center justify-center bg-background">
+    <div className="bg-background flex h-dvh w-screen items-center justify-center">
       <div className="flex w-full max-w-sm flex-col gap-2 overflow-hidden rounded-2xl">
         <div className="flex flex-col items-center justify-center gap-1 px-4 text-center">
           <h3 className="text-xl font-semibold dark:text-zinc-50">Connect your emails</h3>
@@ -82,11 +82,11 @@ export default function ConnectEmails() {
                           height={48}
                         />
                       ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                        <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            className="h-6 w-6 text-primary"
+                            className="text-primary h-6 w-6"
                           >
                             <path
                               fill="currentColor"
@@ -97,7 +97,7 @@ export default function ConnectEmails() {
                       )}
                       <div className="flex flex-col">
                         <span className="text-sm font-medium">{connection.email}</span>
-                        <span className="text-xs text-muted-foreground">Connected</span>
+                        <span className="text-muted-foreground text-xs">Connected</span>
                       </div>
                     </div>
                     <Dialog>
@@ -145,7 +145,7 @@ export default function ConnectEmails() {
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
                 <DialogTitle className="text-center">Connect Email</DialogTitle>
-                <DialogDescription className="text-center text-muted-foreground">
+                <DialogDescription className="text-muted-foreground text-center">
                   Select the email providers you want to connect
                 </DialogDescription>
               </DialogHeader>

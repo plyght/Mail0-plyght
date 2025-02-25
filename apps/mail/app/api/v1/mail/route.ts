@@ -1,6 +1,6 @@
+import { connection } from "@zero/db/schema";
 import { createDriver } from "../../driver";
 import { NextRequest } from "next/server";
-import { connection } from "@zero/db/schema";
 import { and, eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { db } from "@zero/db";
@@ -41,4 +41,3 @@ export const GET = async ({ headers, nextUrl }: NextRequest) => {
     ),
   );
 };
-

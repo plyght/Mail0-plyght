@@ -97,7 +97,7 @@ const ChartControls = ({
   total: number;
 }) => (
   <div className="mb-4 flex items-center justify-between">
-    <span className="text-sm text-muted-foreground">
+    <span className="text-muted-foreground text-sm">
       Showing {showAll ? "all" : "top 10"} contributors
     </span>
     <Button variant="outline" size="sm" onClick={() => setShowAll(!showAll)} className="text-xs">
@@ -362,10 +362,10 @@ export default function OpenPage() {
             <div className="flex items-center gap-3 px-3 first:pl-0 last:pr-0 sm:px-4">
               <Star className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
               <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-neutral-900 dark:text-white sm:text-lg">
+                <span className="text-base font-bold text-neutral-900 sm:text-lg dark:text-white">
                   {repoStats.stars}
                 </span>
-                <span className="hidden text-xs text-neutral-500 dark:text-neutral-400 sm:inline">
+                <span className="hidden text-xs text-neutral-500 sm:inline dark:text-neutral-400">
                   &nbsp;stars
                 </span>
               </div>
@@ -374,10 +374,10 @@ export default function OpenPage() {
             <div className="flex items-center gap-3 px-3 first:pl-0 last:pr-0 sm:px-4">
               <GitFork className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
               <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-neutral-900 dark:text-white sm:text-lg">
+                <span className="text-base font-bold text-neutral-900 sm:text-lg dark:text-white">
                   {repoStats.forks}
                 </span>
-                <span className="hidden text-xs text-neutral-500 dark:text-neutral-400 sm:inline">
+                <span className="hidden text-xs text-neutral-500 sm:inline dark:text-neutral-400">
                   &nbsp;forks
                 </span>
               </div>
@@ -386,7 +386,7 @@ export default function OpenPage() {
             <div className="hidden items-center gap-3 px-3 first:pl-0 last:pr-0 sm:flex sm:px-4">
               <Github className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
               <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-neutral-900 dark:text-white sm:text-lg">
+                <span className="text-base font-bold text-neutral-900 sm:text-lg dark:text-white">
                   {repoStats.watchers}
                 </span>
                 <span className="text-xs text-neutral-500 dark:text-neutral-400">
@@ -398,10 +398,10 @@ export default function OpenPage() {
             <div className="flex items-center gap-3 px-3 first:pl-0 last:pr-0 sm:px-4">
               <MessageCircle className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
               <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-neutral-900 dark:text-white sm:text-lg">
+                <span className="text-base font-bold text-neutral-900 sm:text-lg dark:text-white">
                   {repoStats.openIssues}
                 </span>
-                <span className="hidden text-xs text-neutral-500 dark:text-neutral-400 sm:inline">
+                <span className="hidden text-xs text-neutral-500 sm:inline dark:text-neutral-400">
                   &nbsp;issues
                 </span>
               </div>
@@ -410,10 +410,10 @@ export default function OpenPage() {
             <div className="flex items-center gap-3 px-3 first:pl-0 last:pr-0 sm:px-4">
               <GitPullRequest className="h-4 w-4 text-neutral-600 dark:text-neutral-400" />
               <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-neutral-900 dark:text-white sm:text-lg">
+                <span className="text-base font-bold text-neutral-900 sm:text-lg dark:text-white">
                   {repoStats.openPRs}
                 </span>
-                <span className="hidden text-xs text-neutral-500 dark:text-neutral-400 sm:inline">
+                <span className="hidden text-xs text-neutral-500 sm:inline dark:text-neutral-400">
                   &nbsp;PRs
                 </span>
               </div>
@@ -422,7 +422,7 @@ export default function OpenPage() {
 
           <div className="mt-6 grid gap-4 lg:grid-cols-3">
             {/* Repository Growth */}
-            <Card className="col-span-full border-neutral-100 bg-white/50 p-4 transition-all hover:bg-white/60 dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:bg-neutral-900/60 lg:col-span-2">
+            <Card className="col-span-full border-neutral-100 bg-white/50 p-4 transition-all hover:bg-white/60 lg:col-span-2 dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:bg-neutral-900/60">
               <h3 className="mb-4 text-sm font-medium text-neutral-600 dark:text-neutral-400">
                 Repository Growth
               </h3>
@@ -514,7 +514,7 @@ export default function OpenPage() {
             </Card>
 
             {/* Activity Chart */}
-            <Card className="col-span-full border-neutral-200 bg-white/50 p-4 transition-all hover:bg-white/60 dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:bg-neutral-900/60 lg:col-span-1">
+            <Card className="col-span-full border-neutral-200 bg-white/50 p-4 transition-all hover:bg-white/60 lg:col-span-1 dark:border-neutral-800 dark:bg-neutral-900/50 dark:hover:bg-neutral-900/60">
               <h3 className="mb-4 text-sm font-medium text-neutral-600 dark:text-neutral-400">
                 Recent Activity
               </h3>
@@ -603,7 +603,7 @@ export default function OpenPage() {
             <h1 className="text-3xl font-semibold tracking-tight text-neutral-900/80 dark:text-white">
               Core Team
             </h1>
-            <p className="mt-2 text-muted-foreground">Meet the people behind Mail0</p>
+            <p className="text-muted-foreground mt-2">Meet the people behind Mail0</p>
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -695,7 +695,7 @@ export default function OpenPage() {
             <h1 className="text-3xl font-semibold tracking-tight text-neutral-900/80 dark:text-white">
               Contributors
             </h1>
-            <div className="mt-2 flex items-center justify-center gap-2 text-muted-foreground">
+            <div className="text-muted-foreground mt-2 flex items-center justify-center gap-2">
               <FileCode className="h-4 w-4" />
               <span>Top {filteredContributors?.length} contributors</span>
             </div>
@@ -717,7 +717,7 @@ export default function OpenPage() {
           <div>
             <Tabs defaultValue="grid" className="w-full">
               <div className="mb-6 flex justify-center">
-                <TabsList className="grid h-full w-full grid-cols-2 border border-neutral-200 bg-white/50 p-1 dark:border-neutral-800 dark:bg-neutral-900/50 sm:w-[200px]">
+                <TabsList className="grid h-full w-full grid-cols-2 border border-neutral-200 bg-white/50 p-1 sm:w-[200px] dark:border-neutral-800 dark:bg-neutral-900/50">
                   <TabsTrigger
                     value="grid"
                     className="flex items-center gap-2 text-neutral-600 data-[state=active]:bg-white data-[state=active]:text-neutral-900 data-[state=active]:shadow-sm dark:text-neutral-400 dark:data-[state=active]:bg-neutral-800 dark:data-[state=active]:text-white"

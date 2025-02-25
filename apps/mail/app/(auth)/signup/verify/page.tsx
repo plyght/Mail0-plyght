@@ -5,9 +5,9 @@ import Link from "next/link";
 
 export default function VerifyEmail() {
   return (
-    <div className="flex h-dvh w-screen flex-col items-center justify-center bg-background">
+    <div className="bg-background flex h-dvh w-screen flex-col items-center justify-center">
       <Suspense>
-        <Mail className="h-16 w-16 animate-pulse text-muted-foreground" />
+        <Mail className="text-muted-foreground h-16 w-16 animate-pulse" />
       </Suspense>
       <Card className="w-full max-w-md border-none py-0 shadow-none">
         <CardHeader className="py-2">

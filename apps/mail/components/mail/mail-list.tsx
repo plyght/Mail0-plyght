@@ -1,8 +1,8 @@
 "use client";
 
 import { ComponentProps, useCallback, useEffect, useRef, useState } from "react";
-import { preloadThread, useThreads } from "@/hooks/use-threads";
 import { EmptyState, type FolderType } from "@/components/mail/empty-state";
+import { preloadThread, useThreads } from "@/hooks/use-threads";
 import { useSearchValue } from "@/hooks/use-search-value";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useVirtualizer } from "@tanstack/react-virtual";
@@ -11,8 +11,8 @@ import { useMail } from "@/components/mail/use-mail";
 import { useSession } from "@/lib/auth-client";
 import { Badge } from "@/components/ui/badge";
 import { cn, formatDate } from "@/lib/utils";
-import { InitialThread } from "@/types";
 import { markAsRead } from "@/actions/mail";
+import { InitialThread } from "@/types";
 
 interface MailListProps {
   items: InitialThread[];
@@ -53,7 +53,7 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
       return i % 2 === 1 ? (
         <span
           key={i}
-          className="ring-0.5 inline-flex items-center justify-center rounded bg-primary/10 px-1"
+          className="ring-0.5 bg-primary/10 inline-flex items-center justify-center rounded px-1"
         >
           {part}
         </span>
@@ -126,7 +126,7 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
       onMouseLeave={handleMouseLeave}
       key={message.id}
       className={cn(
-        "group relative flex cursor-pointer flex-col items-start overflow-clip rounded-lg border border-transparent px-4 py-3 text-left text-sm transition-all hover:bg-offsetLight hover:bg-primary/5 hover:opacity-100",
+        "hover:bg-offsetLight hover:bg-primary/5 group relative flex cursor-pointer flex-col items-start overflow-clip rounded-lg border border-transparent px-4 py-3 text-left text-sm transition-all hover:opacity-100",
         !message.unread && "opacity-50",
         (isMailSelected || isMailBulkSelected) && "border-border bg-primary/5 opacity-100",
         isCompact && "py-2",
@@ -134,7 +134,7 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
     >
       <div
         className={cn(
-          "absolute inset-y-0 left-0 w-1 -translate-x-2 bg-primary transition-transform ease-out",
+          "bg-primary absolute inset-y-0 left-0 w-1 -translate-x-2 transition-transform ease-out",
           isMailBulkSelected && "translate-x-0",
         )}
       />
@@ -152,7 +152,7 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
             {message.totalReplies !== 1 ? (
               <span className="ml-0.5 text-xs opacity-70">{message.totalReplies}</span>
             ) : null}
-            {message.unread ? <span className="ml-0.5 size-2 rounded-full bg-skyBlue" /> : null}
+            {message.unread ? <span className="bg-skyBlue ml-0.5 size-2 rounded-full" /> : null}
           </p>
         </div>
         {message.receivedOn ? (
@@ -162,7 +162,7 @@ const Thread = ({ message: initialMessage, selectMode, onSelect, isCompact }: Th
               isMailSelected && "opacity-100",
             )}
           >
-            {formatDate(message.receivedOn.split(".")[0] ?? '')}
+            {formatDate(message.receivedOn.split(".")[0] ?? "")}
           </p>
         ) : null}
       </div>

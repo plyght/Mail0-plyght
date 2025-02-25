@@ -1,9 +1,8 @@
-import * as defaultTheme from "tailwindcss/defaultTheme";
+import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 import sharedConfig from "../../packages/tailwind-config/tailwind.config";
+import * as defaultTheme from "tailwindcss/defaultTheme";
 import * as animate from "tailwindcss-animate";
 import type { Config } from "tailwindcss";
-import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette"
-
 
 export default {
   content: [
